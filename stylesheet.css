@@ -1,0 +1,44 @@
+.articulo{
+   font-family: "Corbel", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
+   /*display: inline-block;*/
+   /*width: auto;*/
+   /*margin: auto;
+/*   display:block;*/
+  /* align-items: center;*/
+}
+article > span{
+   text-align: center;
+   line-height: 100%;
+   
+}
+#imagen{
+   width: 100px;
+   height: 150px;
+   display:block;
+   margin:auto;
+}
+/* Use a media query to add a break point at 800px: */
+.input-css{
+  /* width: 30px;
+   height: 30px;*/
+   float: left;
+	width: 34px;
+	height: 34px;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px;
+	text-align: center;
+	font-size: 14px;
+}
+.div-class{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+
+}
+
+.div-precio-class{
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
