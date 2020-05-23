@@ -18,8 +18,6 @@ var divPrincipal = document.getElementById('div-principal');
 
 
 function mostrar() {
-  //var t="<thead class='thead-dark'><tr><th>Nombre</th><th>Descripcion</th><th>Precio</th><th>Imagen</th></tr></thead>";
-
   var productsRef = db.collection("productos");
   var condicion = document.getElementById('input-producto').value;
   //var c = productsRef.orderBy('nombre').startAt(condicion).endAt(condicion+'\uf8ff')
@@ -38,10 +36,7 @@ function mostrar() {
         console.log(myJSON.nombre,
           myJSON.rutaImg,
           myJSON.precio);
-        //t=llenarInfo(t,cadena,myJSON.nombre,myJSON.descripcion,myJSON.rutaImg,myJSON.precio);
-        //console.log(t);
-        crearArticulo(myJSON.rutaImg, myJSON.nombre, myJSON.precio,myJSON.pxUnit);
-        //llenar(t);
+        crearArticulo(myJSON.rutaImg, myJSON.nombre, myJSON.precio, myJSON.unidad);
       });
     })
     .catch(err => {
@@ -49,59 +44,51 @@ function mostrar() {
     });
 
 }
-/*
-function llenarInfo(t,cadena, nombre, descripcion,ruta, precio){
-//  cadena+=cadena;
-  cadena="<tr class='prueba'><td>" + nombre +"</td><td>"+ descripcion+ "</td><td>" + precio + "</td><td><img src='" + ruta + "'width= 200 height= 200></img></td></tr>"
-  //console.log(cadena);
-  r=t.concat(cadena);
-  return r;
-}
-function llenar(t) {
-  var capa = document.getElementById("tabla");
-  //var table = document.createElement("table");
-  capa.innerHTML = t;
-}
-*/
 
-function crearArticulo(imagen, nombre, precio,pxUnit) {
+
+function crearArticulo(imagen, nombre, precio, unidad) {
   var imgI = document.createElement("img");
   imgI.src = imagen;
-  imgI.id="imagen";
+  imgI.className = "imgProducto";
 
-  var nombreP = document.createElement("p");
+  var nombreP = document.createElement("span");
   var nombreTxt = document.createTextNode(nombre);
   nombreP.appendChild(nombreTxt);
+  nombreP.className='nombre-class';
   var precioP = document.createElement("span");
   var precioTxt = document.createTextNode("$" + precio);
   precioP.appendChild(precioTxt);
 
-  if(pxUnit){
-    var unidadP=document.createElement("span");
-    var unidadTxt=document.createTextNode("1 ud");
-    unidadP.appendChild(unidadTxt);
-  }else{
-    var unidadP=document.createElement("span");
-    var unidadTxt=document.createTextNode("1 caja");
-    unidadP.appendChild(unidadTxt);
-  }
-  var inputP=document.createElement("input");
-  inputP.type="text";
-  inputP.className="input-css";
+
+  var unidadP = document.createElement("span");
+  var unidadTxt = document.createTextNode(unidad);
+  unidadP.appendChild(unidadTxt);
+  var inputP = document.createElement("input");
+  inputP.type = "text";
+  inputP.className = "input-css";
+  inputP.setAttribute('value',1);
+  inputP.setAttribute('id',"valor");
   
-  var btnMas=document.createElement("button");
-  var btnMenos=document.createElement("button");
-  var btnMasTxt=document.createTextNode("+");
-  var btnMenosTxt=document.createTextNode("-");
-  var btnAddCanasta=document.createElement("button");
-  var btnAddCanastaTxt=document.createTextNode("Añadir a la canasta");
-  var divAgrupBtn=document.createElement("div");
-  var divAgrupPrecio=document.createElement("div");
-  divAgrupBtn.className="div-class";
-  divAgrupPrecio.className="div-precio-class";
+  var btnMas = document.createElement("button");
+  var btnMenos = document.createElement("button");
+  var btnMasTxt = document.createTextNode("+");
+  var btnMenosTxt = document.createTextNode("-");
+  var btnAddCanasta = document.createElement("button");
+  btnMas.className='btn-mas-menos';
+
+  btnMas.setAttribute('onclick',incrementar);
+  btnMenos.setAttribute('onclick',decrementar);
+  
+  btnMenos.className='btn-mas-menos';
+  var btnAddCanastaTxt = document.createTextNode("Añadir a la canasta");
+  var divAgrupBtn = document.createElement("div");
+  var divAgrupPrecio = document.createElement("div");
+  divAgrupBtn.className = "div-agrup-btn-class";
+  divAgrupPrecio.className = "div-precio-class";
   btnMas.appendChild(btnMasTxt);
   btnMenos.appendChild(btnMenosTxt);
   btnAddCanasta.appendChild(btnAddCanastaTxt);
+  btnAddCanasta.className='btn-addCanasta';
 
   divAgrupPrecio.appendChild(unidadP);
   divAgrupPrecio.appendChild(precioP);
@@ -111,7 +98,7 @@ function crearArticulo(imagen, nombre, precio,pxUnit) {
   divAgrupBtn.appendChild(btnMas);
   //divS.appendChild(nombreP);
   var article = document.createElement("article");
-  article.className="articulo";
+  article.className = "articulo";
   article.appendChild(imgI);
   article.appendChild(nombreP);
   /*article.appendChild(unidadP);
@@ -127,3 +114,20 @@ function crearArticulo(imagen, nombre, precio,pxUnit) {
   //divPrincipal.innerHTML="<div><p>"+nombre+"</p></div>";// Añadir el nodo Element como hijo de la pagina
   //document.body.appendChild(parrafo);
 }
+function incrementar() {
+
+  var num=document.getElementById('valor').value;
+  console.log(num);
+  
+  
+  
+}
+  
+   
+  
+  function decrementar() {
+    var num=document.getElementById('valor').value;
+    console.log(num);
+    
+
+  }
