@@ -13,9 +13,8 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
-var contenedor = "";
 var divPrincipal = document.getElementById('div-principal');
-var foo ;
+var foo;
 
 function mostrar() {
   var productsRef = db.collection("productos");
@@ -48,7 +47,6 @@ function crearArticulo(imagen, nombre, precio, unidad) {
   var imgI = document.createElement("img");
   imgI.src = imagen;
   imgI.className = "imgProducto";
-
   var nombreP = document.createElement("span");
   var nombreTxt = document.createTextNode(nombre);
   nombreP.appendChild(nombreTxt);
@@ -56,140 +54,68 @@ function crearArticulo(imagen, nombre, precio, unidad) {
   var precioP = document.createElement("span");
   var precioTxt = document.createTextNode("$" + precio);
   precioP.appendChild(precioTxt);
-
-
   var unidadP = document.createElement("span");
   var unidadTxt = document.createTextNode(unidad);
   unidadP.appendChild(unidadTxt);
-//-------------------------------
-/*var valorP=document.createElement("span");
-var valorTxt= document.createTextNode("1");
-valorP.appendChild(valorTxt);
-valorP.id='valor';*/
-//-------------------------------
- var inputP = document.createElement("input");
-  inputP.type = "text";
-  inputP.className = "in-num";
-
-  inputP.setAttribute('value', 1);
-  inputP.setAttribute('readonly', "");
-
-  var btnMas = document.createElement("button");
-  var btnMenos = document.createElement("button");
-  var btnMasTxt = document.createTextNode("+");
-  var btnMenosTxt = document.createTextNode("-");
+  //var inputP = document.createElement("input");
+  //inputP.type = "text";
+  //inputP.value = "1";
+  //var inputText = document.createTextNode("1");
+  //inputP.setAttribute('readonly', "");
+  //inputP.appendChild(inputText);
+  /*var btnMas = document.createElement("button");
+  var btnMenos = document.createElement("button");*/
+  /*var btnMas = document.createElement("input");
+  var btnMenos = document.createElement("input");*/
+  /*var btnMasTxt = document.createTextNode("+");
+  var btnMenosTxt = document.createTextNode("-");*/
   var btnAddCanasta = document.createElement("button");
-  btnMas.className = 'btn-mas-menos';
-
-  
-  btnMas.setAttribute('onclick',contador());
- //btnMenos.setAttribute('onclick', contador());
-  btnMenos.className = 'btn-mas-menos';
   var btnAddCanastaTxt = document.createTextNode("Añadir a la canasta");
   var divAgrupBtn = document.createElement("div");
-  divAgrupBtn.setAttribute("class","num-block skin-3");
-  var divBtn=document.createElement("div");
-  var spanA=document.createElement("span");
-  var spanB=document.createElement("span");
-  divBtn.setAttribute("class","num-in");
-  spanA.setAttribute("class","minus dis");
-  spanB.setAttribute("class","plus");
+  divAgrupBtn.setAttribute("id", "principal");
+  divAgrupBtn.setAttribute("class", "div-agrup-btn-class");
+  let btonMinus = document.createElement('input');
+  btonMinus.setAttribute('type', "button");
+  btonMinus.setAttribute('value', "-");
+  btonMinus.setAttribute('id', "min");
+  btonMinus.setAttribute("class", "btn-mas-menos");
+  btonMinus.addEventListener("click", function () {
+    quantityField = $(this).next();
+    if (quantityField.val() != 0) {
+      quantityField.val(parseInt(quantityField.val(), 10) - 1);
+    }
+  });
+  let btonPlus = document.createElement('input');
+  btonPlus.setAttribute('type', "button");
+  btonPlus.setAttribute('value', "+");
+  btonPlus.setAttribute('id', "plus");
+  btonPlus.setAttribute("class", "btn-mas-menos");
+  btonPlus.addEventListener("click", function () {
+    quantityField = $(this).prev();
+    quantityField.val(parseInt(quantityField.val(), 10) + 1);
+  });
+  let cantidad = document.createElement('input');
+  cantidad.setAttribute('type', "text");
+  cantidad.setAttribute('value', "0");
+  cantidad.setAttribute('id', "cantidad");
+  cantidad.setAttribute('readonly', "");
+  cantidad.setAttribute('class', 'input-css')
+  divAgrupBtn.append(btonMinus);
+  divAgrupBtn.append(cantidad);
+  divAgrupBtn.append(btonPlus);
   var divAgrupPrecio = document.createElement("div");
-  //divAgrupBtn.className = "num-block skin-3";
   divAgrupPrecio.className = "div-precio-class";
-  btnMas.id = 'incremento';
-  btnMenos.id = 'decremento';
-  btnMas.appendChild(btnMasTxt);
-  btnMenos.appendChild(btnMenosTxt);
   btnAddCanasta.appendChild(btnAddCanastaTxt);
   btnAddCanasta.className = 'btn-addCanasta';
-
   divAgrupPrecio.appendChild(unidadP);
   divAgrupPrecio.appendChild(precioP);
-  //var divS= document.createElement("div");
-  //divAgrupBtn.appendChild(btnMenos);
-  //divAgrupBtn.appendChild(inputP);
-  //divAgrupBtn.appendChild(valorP);
-  //divAgrupBtn.appendChild(btnMas);
-  divBtn.appendChild(spanA);
-  divBtn.appendChild(inputP);
-  divBtn.appendChild(spanB);
-  divAgrupBtn.appendChild(divBtn);
-  //divS.appendChild(nombreP);
   var article = document.createElement("article");
   article.className = "articulo";
   article.appendChild(imgI);
   article.appendChild(nombreP);
-  /*article.appendChild(unidadP);
-  article.appendChild(precioP);*/
   article.appendChild(divAgrupPrecio);
-  /*article.appendChild(btnMenos);
-  article.appendChild(inputP);
-  article.appendChild(btnMas);*/
   article.appendChild(divAgrupBtn);
   article.appendChild(btnAddCanasta);
   divPrincipal.appendChild(article);
-
-  /*
-    var incrementoId = document.getElementById('incremento');
-    var decrementoId = document.getElementById('decremento');
-    var displayId = document.getElementById('valor');
-    incrementoId.onclick = function () {
-      console.log("deberia estar sumando");
-      displayId.value = Number(displayId.value) + 1;
-      console.log(displayId.value);
-    };
-    decrementoId.onclick = function () {
-      console.log("deberia estar restando");
-      displayId.value = Number(displayId.value) - 1;
-      console.log(displayId.value);
-    };*/
-    
-
-    
 }
 
-
-function incremento() {
-  $('valor').value = parseInt($('valor').value) + 1;
-}
-
-function decremento() {
-  $('valor').value = parseInt($('valor').value) - 1;
-  //var newCounterValue = (counterValue)     ? counterValue - 1     : 0;
-
-  //$('valor').value = newCounterValue;
-}
-
-function contador(){
-  
-  $(document).ready(function() {
-    console.log("por aqui paso");
-    $('.num-in span').click(function () {
-        var $input = $(this).parents('.num-block').find('input.in-num');
-      if($(this).hasClass('minus')) {
-        var count = parseFloat($input.val()) - 1;
-        console.log(count);
-        count = count < 1 ? 1 : count;
-        if (count < 2) {
-          $(this).addClass('dis');
-        }
-        else {
-          $(this).removeClass('dis');
-        }
-        $input.val(count);
-      }
-      else {
-        var count = parseFloat($input.val()) + 1
-        $input.val(count);
-        if (count > 1) {
-          $(this).parents('.num-block').find(('.minus')).removeClass('dis');
-        }
-      }
-      
-      $input.change();
-      return false;
-    });
-    
-  });
-}
