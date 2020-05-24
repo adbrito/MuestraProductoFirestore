@@ -49,17 +49,75 @@ padding: 2%;
 .btn-mas-menos{
    width: 30px;
    height: 30px;
-   border-radius: 5%;
+   border-radius: 25%;
 }
 
 .btn-addCanasta{
    height: 30px;
    color: white;
    background-color: #62B345;
+   
 }
 
 .nombre-class{
    padding: 3%;
    font-weight: bold;
    color:#ECD053;
+}
+
+
+
+.skin-3 .num-in span {
+	display: block;
+	float: left;
+	width: 25px;
+	height: 34px;
+	position: relative;
+	cursor: pointer;
+}
+
+.skin-3 .num-in span.minus:before {
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 2px;
+	top: 50%;
+	left: 50%;
+	margin-left: -5px;
+	margin-top: -1px;
+	background-color: #000;
+}
+
+.skin-3 .num-in .in-num {
+	float: left;
+	width: 54px;
+	height: 34px;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.skin-3 .num-in span.plus:before {
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 2px;
+	top: 50%;
+	left: 50%;
+	margin-left: -5px;
+	margin-top: -1px;
+	background-color: #000;
+}
+
+.skin-3 .num-in span.plus:after {
+	content: '';
+	position: absolute;
+	height: 10px;
+	width: 2px;
+	left: 50%;
+	top: 50%;
+	margin-top: -5px;
+	margin-left: -1px;
+	background-color: #000;
 }
