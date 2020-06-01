@@ -96,7 +96,7 @@ function crearArticulo(imagen, nombre, precio, unidad) {
   });
   let cantidad = document.createElement('input');
   cantidad.setAttribute('type', "text");
-  cantidad.setAttribute('value', "0");
+  cantidad.setAttribute('value', "1");
   cantidad.setAttribute('id', "cantidad");
   cantidad.setAttribute('readonly', "");
   cantidad.setAttribute('class', 'input-css')
@@ -107,6 +107,17 @@ function crearArticulo(imagen, nombre, precio, unidad) {
   divAgrupPrecio.className = "div-precio-class";
   btnAddCanasta.appendChild(btnAddCanastaTxt);
   btnAddCanasta.className = 'btn-addCanasta';
+  //btnAddCanasta.setAttribute("onclick",ingresarAlcarrito(nombre,precio,cantidad.value));
+
+  btnAddCanasta.addEventListener("click", function () {
+    /*let nombre = doc.data().nombre;
+    let precio = parseFloat(doc.data().precio);
+    let cantidad = parseInt(document.getElementById("cantidad-" + quitarEspaciosNombre(nombre)).value);*/
+    console.log(nombre, precio, cantidad);
+    ingresarAlcarrito(nombre, precio, cantidad.value);
+  }
+  );
+
   divAgrupPrecio.appendChild(unidadP);
   divAgrupPrecio.appendChild(precioP);
   var article = document.createElement("article");
@@ -119,3 +130,95 @@ function crearArticulo(imagen, nombre, precio, unidad) {
   divPrincipal.appendChild(article);
 }
 
+let productosCarrito = [];
+let cantidadCarrito = [];
+let total = 0;
+
+function ingresarAlcarrito(nombre = "manzana", precio = 1.2, cantidad = 1) {
+  let indiceProducto = productosCarrito.indexOf(nombre);
+  console.log("indice producto",indiceProducto);
+  if (indiceProducto == -1) {
+
+    productosCarrito.push(nombre);
+
+    cantidadCarrito.push(cantidad);
+
+    let producto = $("<tr>", { id: quitarEspaciosNombre(nombre) + "-carrito" });
+    var tdN = document.createElement('td');
+    tdN.className = "estilo-izq";
+    var divN = document.createElement('div');
+    divN.append(nombre);
+    tdN.append(divN);
+    //divN.className = "estilo-izq";
+    producto.append(tdN);
+    var tdC = document.createElement('td'); var tdP = document.createElement('td');
+
+    var divC = document.createElement('div');
+    var divP = document.createElement('div');
+    tdP.className = "estilo-der";
+    divC.append(cantidad);
+    tdC.append(divC);
+    divP.append("$ " + round(cantidad * precio));
+    tdP.append(divP);
+    tdC.className = "valor";
+    producto.append(tdC);
+    producto.append(tdP);
+    //producto.append($("<td class='valor'><div>").append("$ " + round(cantidad*precio)));
+
+    $("#productos-carrito").append(producto);
+  }
+  else {
+    var tdN = document.createElement('td');
+    tdN.className = "estilo-izq";
+    var divN = document.createElement('div');
+    divN.append(nombre);
+    tdN.append(divN);
+    var tdC = document.createElement('td'); var tdP = document.createElement('td');
+
+    var divC = document.createElement('div');
+    var divP = document.createElement('div');
+    tdP.className = "estilo-der";
+
+    cantidadCarrito[indiceProducto] = cantidadCarrito[indiceProducto] + cantidad;
+    let Nuevacantidad = cantidadCarrito[indiceProducto];
+    totalXproducto = Nuevacantidad * precio;
+    document.getElementById(quitarEspaciosNombre(nombre) + "-carrito").innerHTML = "";
+    console.log(nombre + "-carrito");
+    $("#" + quitarEspaciosNombre(nombre) + "-carrito").append(tdN);
+    divC.append(Nuevacantidad);
+    tdC.append(divC);
+    divP.append("$ " + round(cantidad * precio));
+    tdP.append(divP);
+    tdC.className = "valor";
+    $("#" + quitarEspaciosNombre(nombre) + "-carrito").append(tdC);
+    $("#" + quitarEspaciosNombre(nombre) + "-carrito").append(tdP);
+  }
+
+  total = total + precio * cantidad;
+  document.getElementById("total").innerHTML = "$" + round(total);
+  console.log(productosCarrito);
+  console.log(cantidadCarrito);
+  console.log("-------------------------");
+
+}
+
+function quitarEspaciosNombre(nombre) {
+  let separacion = nombre.split(" ");
+  let nuevo = separacion.map(function (palabra) {
+    return palabra.charAt(0).toUpperCase() + palabra.slice(1);
+  });
+  return nuevo.join("");
+}
+
+function round(num, decimales = 2) {
+  var signo = (num >= 0 ? 1 : -1);
+  num = num * signo;
+  if (decimales === 0) //con 0 decimales
+    return signo * Math.round(num);
+  // round(x * 10 ^ decimales)
+  num = num.toString().split('e');
+  num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimales) : decimales)));
+  // x * 10 ^ (-decimales)
+  num = num.toString().split('e');
+  return signo * (num[0] + 'e' + (num[1] ? (+num[1] - decimales) : -decimales));
+}
